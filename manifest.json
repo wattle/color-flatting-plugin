@@ -1,0 +1,77 @@
+{
+  "id": "com.superheropw.colorflats",
+  "name": "ColorFlats",
+  "version": "1.0.0",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "host": {
+    "app": "PS",
+    "minVersion": "24.2.0"
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "com.superheropw.colorflats.main",
+      "label": {
+        "default": "ColorFlats"
+      },
+      "minimumSize": {
+        "width": 280,
+        "height": 400
+      },
+      "maximumSize": {
+        "width": 600,
+        "height": 2000
+      },
+      "preferredDockedSize": {
+        "width": 300,
+        "height": 500
+      },
+      "preferredFloatingSize": {
+        "width": 400,
+        "height": 600
+      },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/dark.png",
+          "scale": [1, 2],
+          "theme": ["darkest", "dark", "medium"]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/light.png",
+          "scale": [1, 2],
+          "theme": ["lightest", "light"]
+        }
+      ]
+    }
+  ],
+  "featureFlags": {
+    "enableAlerts": true
+  },
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "launchProcess": {
+      "schemes": ["https", "file"],
+      "extensions": [".psd", ".png", ".jpg"]
+    },
+    "network": {
+      "domains": ["ws://localhost:8081"]
+    },
+    "clipboard": "readAndWrite",
+    "allowCodeGenerationFromStrings": true
+  },
+  "icons": [
+    {
+      "width": 48,
+      "height": 48,
+      "path": "icons/plugin-icon.png",
+      "scale": [1, 2],
+      "theme": ["darkest", "dark", "medium", "lightest", "light", "all"],
+      "species": ["pluginList"]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "colorflats",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env MODE=dev vite build --watch",
+    "build": "cross-env MODE=build vite build",
+    "ccx": "cross-env MODE=package vite build",
+    "zip": "cross-env MODE=zip vite build",
+    "ccx-install": "cross-env BOLT_ACTION=ccx-install vite",
+    "ccx-uninstall": "cross-env BOLT_ACTION=ccx-uninstall vite"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@adobe/cc-ext-uxp-types": "https://github.com/justintaylor-dev/cc-ext-uxp-types.git",
+    "@types/node": "^20.8.7",
+    "@types/photoshop": "^25.0.2",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "@types/ws": "^8.5.8",
+    "@vitejs/plugin-react": "^4.5.1",
+    "bolt-uxp-utils": "^1.3.6",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "sass": "^1.69.5",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-uxp-plugin": "^1.3.8",
+    "ws": "^8.14.2"
+  }
+}
