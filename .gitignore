@@ -3,3 +3,21 @@ dist
 .env
 *.log
 .DS_Store
+
+# Hybrid addon build artifacts
+src/hybrid/mac/build/
+src/hybrid/win/build/
+src/hybrid/win/**/*.obj
+src/hybrid/win/**/*.enc
+src/hybrid/win/**/*.idb
+src/hybrid/win/**/*.tlog/
+src/hybrid/win/**/*.lastbuildstate
+
+# Native addon build artifacts (legacy)
+native/build/
+native/*.dylib
+native/*.dll
+native/*.so
+native/mac-arm64/
+native/mac-x64/
+native/win-x64/

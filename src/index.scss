@@ -196,6 +196,33 @@ main {
   }
 }
 
+.engine-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--uxp-host-widget-hover-background-color);
+  font-size: 11px;
+
+  .doc-detail {
+    padding: 0;
+  }
+
+  .native-available {
+    color: #4CAF50;
+    font-weight: 600;
+  }
+
+  .native-unavailable {
+    color: #FF9800;
+    font-weight: 500;
+  }
+
+  .hint {
+    font-size: 10px;
+    color: var(--uxp-host-text-color-secondary);
+    font-style: italic;
+  }
+}
+
 sp-divider {
   margin: 2px 0;
 }

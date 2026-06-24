@@ -1,6 +1,13 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { getDocInfo, LayerInfo } from "./api/uxp";
-import { generateColorFlats, analyzeOutlines, DEFAULT_CONFIG, FlatConfig } from "./lib/flats";
+import {
+  hybridGenerateColorFlats,
+  hybridAnalyzeOutlines,
+  initNativeBridge,
+  isNativeAvailable,
+  DEFAULT_CONFIG,
+  FlatConfig,
+} from "./lib/native-bridge";
 
 const LOG_PREFIX = "[ColorFlats]";
 
@@ -10,6 +17,7 @@ const MAX_DOC_DIMENSION = 5200;
 export const App = () => {
   const [config, setConfig] = useState<FlatConfig>({ ...DEFAULT_CONFIG });
   const [status, setStatus] = useState<string>("Ready");
+  const [nativeStatus, setNativeStatus] = useState<string>("Checking...");
   const [isProcessing, setIsProcessing] = useState(false);
   const [docInfo, setDocInfo] = useState<{
     name: string;
@@ -47,9 +55,12 @@ export const App = () => {
     }
   }, []);
 
-  // Initial load
+  // Initial load — initialize native bridge first
   useEffect(() => {
-    console.log(LOG_PREFIX, "App: initial mount, refreshing doc info");
+    console.log(LOG_PREFIX, "App: initial mount");
+    initNativeBridge();
+    setNativeStatus(isNativeAvailable() ? "✓ C++ native" : "JS only");
+    console.log(LOG_PREFIX, `Native addon: ${isNativeAvailable() ? "available" : "not available"}`);
     refreshDocInfo();
   }, [refreshDocInfo]);
 
@@ -82,10 +93,11 @@ export const App = () => {
 
     try {
       console.log(LOG_PREFIX, "handleGenerateFlats: calling generateColorFlats...");
-      const result = await generateColorFlats(config);
+      const result = await hybridGenerateColorFlats(config);
       console.log(LOG_PREFIX, "handleGenerateFlats: got result", result);
       setRegionCount(result.regionCount);
-      setStatus(`✓ Created ${result.regionCount} flat regions on "${result.layerName}" layer`);
+      const engineTag = result.usedNative ? " (C++)" : " (JS)";
+      setStatus(`✓ Created ${result.regionCount} flat regions on "${result.layerName}" layer${engineTag}`);
       setTimeout(() => refreshDocInfo(), 500);
     } catch (error: any) {
       const msg = error?.message || String(error);
@@ -117,10 +129,11 @@ export const App = () => {
 
     try {
       console.log(LOG_PREFIX, "handleAnalyze: calling analyzeOutlines...");
-      const result = await analyzeOutlines(config);
+      const result = await hybridAnalyzeOutlines(config);
       console.log(LOG_PREFIX, "handleAnalyze: got result", result);
       setOutlineInfo(result);
-      setStatus(`✓ Found ${result.regionsFound} flappable regions (${result.outlinePixels.toLocaleString()} outline pixels)`);
+      const engineTag = result.usedNative ? " (C++)" : " (JS)";
+      setStatus(`✓ Found ${result.regionsFound} flappable regions (${result.outlinePixels.toLocaleString()} outline pixels)${engineTag}`);
     } catch (error: any) {
       const msg = error?.message || String(error);
       console.error(LOG_PREFIX, "handleAnalyze error:", msg, error);
@@ -379,6 +392,21 @@ export const App = () => {
           <span>Created <strong>{regionCount}</strong> flat color regions on layer "<strong>Color Flats</strong>"</span>
         </div>
       )}
+
+      {/* Engine Status */}
+      <div className="section engine-status">
+        <div className="doc-detail">
+          <span className="label">Engine:</span>
+          <span className={`value ${isNativeAvailable() ? "native-available" : "native-unavailable"}`}>
+            {nativeStatus}
+          </span>
+        </div>
+        {!isNativeAvailable() && (
+          <div className="hint">
+            Install the native addon for faster processing. See native/README.md.
+          </div>
+        )}
+      </div>
 
       {/* Status */}
       <div className="status-bar">

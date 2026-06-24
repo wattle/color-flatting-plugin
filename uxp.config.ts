@@ -19,11 +19,13 @@ const manifest: any = {
   name,
   version,
   main: "index.html",
-  manifestVersion: 5,
-  host: {
-    app: "PS",
-    minVersion: "24.2.0",
-  },
+  manifestVersion: 6,
+  host: [
+    {
+      app: "PS",
+      minVersion: "24.2.0",
+    },
+  ],
   entrypoints: [
     {
       type: "panel",
@@ -67,6 +69,11 @@ const manifest: any = {
     },
     clipboard: "readAndWrite",
     allowCodeGenerationFromStrings: true,
+    allowEnterDebugger: true,
+    enableAddon: true,
+  },
+  addon: {
+    name: "colorflats-hybrid.uxpaddon",
   },
   icons: [
     {

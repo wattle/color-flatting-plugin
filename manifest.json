@@ -3,11 +3,13 @@
   "name": "ColorFlats",
   "version": "1.0.0",
   "main": "index.html",
-  "manifestVersion": 5,
-  "host": {
-    "app": "PS",
-    "minVersion": "24.2.0"
-  },
+  "manifestVersion": 6,
+  "host": [
+    {
+      "app": "PS",
+      "minVersion": "24.2.0"
+    }
+  ],
   "entrypoints": [
     {
       "type": "panel",
@@ -15,22 +17,10 @@
       "label": {
         "default": "ColorFlats"
       },
-      "minimumSize": {
-        "width": 280,
-        "height": 400
-      },
-      "maximumSize": {
-        "width": 600,
-        "height": 2000
-      },
-      "preferredDockedSize": {
-        "width": 300,
-        "height": 500
-      },
-      "preferredFloatingSize": {
-        "width": 400,
-        "height": 600
-      },
+      "minimumSize": { "width": 280, "height": 400 },
+      "maximumSize": { "width": 600, "height": 2000 },
+      "preferredDockedSize": { "width": 300, "height": 500 },
+      "preferredFloatingSize": { "width": 400, "height": 600 },
       "icons": [
         {
           "width": 23,
@@ -62,7 +52,12 @@
       "domains": ["ws://localhost:8081"]
     },
     "clipboard": "readAndWrite",
-    "allowCodeGenerationFromStrings": true
+    "allowCodeGenerationFromStrings": true,
+    "allowEnterDebugger": true,
+    "enableAddon": true
+  },
+  "addon": {
+    "name": "colorflats-hybrid.uxpaddon"
   },
   "icons": [
     {

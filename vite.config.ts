@@ -9,6 +9,9 @@ process.env.VITE_BOLT_MODE = mode;
 process.env.VITE_BOLT_WEBVIEW_UI = "false";
 process.env.VITE_BOLT_WEBVIEW_PORT = "8082";
 
+const shouldNotEmptyDir =
+  mode === "dev" && config.manifest.requiredPermissions?.enableAddon;
+
 export default defineConfig({
   plugins: [
     uxp(config, mode),
@@ -17,10 +20,11 @@ export default defineConfig({
   build: {
     sourcemap: mode && ["dev", "build"].includes(mode) ? "inline" : false,
     minify: false,
-    emptyOutDir: true,
+    emptyOutDir: !shouldNotEmptyDir,
     rollupOptions: {
       external: [
         "photoshop",
+        "colorflats-hybrid.uxpaddon",
         "uxp",
         "fs",
         "os",
